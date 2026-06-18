@@ -8,6 +8,7 @@ export interface Project {
   live_url?: string
   image_url?: string
   featured: boolean
+  slug?: string
   order_index: number
   created_at: string
   updated_at: string

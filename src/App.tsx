@@ -16,6 +16,7 @@ import GalleryPage from '@/pages/GalleryPage'
 import ResumePage from '@/pages/ResumePage'
 import ContactPage from '@/pages/ContactPage'
 import AdminPage from '@/pages/admin/AdminPage'
+import ProjectDetailPage from '@/pages/ProjectDetailPage'
 
 function PortfolioLayout({ children }: { children: ReactNode }) {
   return <Layout>{children}</Layout>
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="/about" element={<PortfolioLayout><AboutPage /></PortfolioLayout>} />
           <Route path="/skills" element={<PortfolioLayout><SkillsPage /></PortfolioLayout>} />
           <Route path="/projects" element={<PortfolioLayout><ProjectsPage /></PortfolioLayout>} />
+          <Route path="/projects/:slug" element={<PortfolioLayout><ProjectDetailPage /></PortfolioLayout>} />
           <Route path="/open-source" element={<PortfolioLayout><OpenSourcePage /></PortfolioLayout>} />
           <Route path="/achievements" element={<PortfolioLayout><AchievementsPage /></PortfolioLayout>} />
           <Route path="/certificates" element={<PortfolioLayout><CertificatesPage /></PortfolioLayout>} />

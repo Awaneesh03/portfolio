@@ -1,13 +1,12 @@
 import { Mail, Code2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { GithubIcon, LinkedinIcon, TwitterIcon } from '@/components/ui/BrandIcons'
+import { GithubIcon, LinkedinIcon } from '@/components/ui/BrandIcons'
 import { PERSONAL_INFO } from '@/data'
 
 export default function Footer() {
   const socials = [
     { icon: GithubIcon, href: PERSONAL_INFO.github, label: 'GitHub' },
     { icon: LinkedinIcon, href: PERSONAL_INFO.linkedin, label: 'LinkedIn' },
-    { icon: TwitterIcon, href: PERSONAL_INFO.twitter, label: 'Twitter / X' },
     { icon: Mail, href: `mailto:${PERSONAL_INFO.email}`, label: 'Email' },
   ]
 

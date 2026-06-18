@@ -28,8 +28,8 @@ export default function ContactSection() {
 
   const contactInfo = [
     { icon: Mail, label: 'Email', value: PERSONAL_INFO.email, href: `mailto:${PERSONAL_INFO.email}` },
-    { icon: GithubIcon, label: 'GitHub', value: 'awaneeshgupta', href: PERSONAL_INFO.github },
-    { icon: LinkedinIcon, label: 'LinkedIn', value: 'awaneeshgupta', href: PERSONAL_INFO.linkedin },
+    { icon: GithubIcon, label: 'GitHub', value: 'Awaneesh03', href: PERSONAL_INFO.github },
+    { icon: LinkedinIcon, label: 'LinkedIn', value: 'awaneesh-gupta', href: PERSONAL_INFO.linkedin },
     { icon: MapPin, label: 'Location', value: PERSONAL_INFO.location, href: null },
   ]
 

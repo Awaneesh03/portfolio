@@ -4,7 +4,7 @@ import type { ReactElement } from 'react'
 import { supabase } from '@/lib/supabase'
 import {
   LayoutDashboard, FolderOpen, Award, Image, Zap, Trophy, FileText,
-  LogOut, Menu, X, Code2, ChevronRight, MessageSquare
+  LogOut, Menu, X, Code2, ChevronRight, MessageSquare, Settings
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import ProjectsPanel from './panels/ProjectsPanel'
@@ -14,8 +14,9 @@ import SkillsPanel from './panels/SkillsPanel'
 import AchievementsPanel from './panels/AchievementsPanel'
 import ResumePanel from './panels/ResumePanel'
 import MessagesPanel from './panels/MessagesPanel'
+import SettingsPanel from './panels/SettingsPanel'
 
-type Panel = 'overview' | 'projects' | 'certificates' | 'gallery' | 'skills' | 'achievements' | 'resume' | 'messages'
+type Panel = 'overview' | 'projects' | 'certificates' | 'gallery' | 'skills' | 'achievements' | 'resume' | 'messages' | 'settings'
 
 const navItems: { id: Panel; label: string; icon: typeof LayoutDashboard }[] = [
   { id: 'overview', label: 'Overview', icon: LayoutDashboard },
@@ -26,9 +27,10 @@ const navItems: { id: Panel; label: string; icon: typeof LayoutDashboard }[] = [
   { id: 'achievements', label: 'Achievements', icon: Trophy },
   { id: 'resume', label: 'Resume', icon: FileText },
   { id: 'messages', label: 'Messages', icon: MessageSquare },
+  { id: 'settings', label: 'Settings', icon: Settings },
 ]
 
-function OverviewPanel() {
+function OverviewPanel({ onNavigate }: { onNavigate: (panel: Panel) => void }) {
   const { user } = useAuth()
   const [counts, setCounts] = useState({ projects: 0, certificates: 0, gallery: 0, unread: 0 })
 
@@ -82,11 +84,15 @@ function OverviewPanel() {
         <h3 className="font-semibold text-white mb-3">Quick Actions</h3>
         <div className="grid sm:grid-cols-2 gap-2">
           {navItems.slice(1).map(({ id, label, icon: Icon }) => (
-            <div key={id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
+            <button
+              key={id}
+              onClick={() => onNavigate(id)}
+              className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors w-full text-left"
+            >
               <Icon size={16} className="text-amber-400" />
               <span className="text-gray-300 text-sm">Manage {label}</span>
               <ChevronRight size={14} className="text-gray-600 ml-auto" />
-            </div>
+            </button>
           ))}
         </div>
       </div>
@@ -100,7 +106,7 @@ export default function AdminDashboard() {
   const { user, signOut } = useAuth()
 
   const panels: Record<Panel, ReactElement> = {
-    overview: <OverviewPanel />,
+    overview: <OverviewPanel onNavigate={setActivePanel} />,
     projects: <ProjectsPanel />,
     certificates: <CertificatesPanel />,
     gallery: <GalleryPanel />,
@@ -108,6 +114,7 @@ export default function AdminDashboard() {
     achievements: <AchievementsPanel />,
     resume: <ResumePanel />,
     messages: <MessagesPanel />,
+    settings: <SettingsPanel />,
   }
 
   return (

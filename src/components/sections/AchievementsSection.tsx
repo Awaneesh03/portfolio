@@ -8,35 +8,35 @@ import type { Achievement } from '@/types'
 const FALLBACK_ACHIEVEMENTS: Achievement[] = [
   {
     id: '1',
-    title: 'First Open Source Contribution',
-    description: 'Successfully merged my first pull request to a major open source project',
-    date: '2025-08',
-    category: 'open-source',
-    icon: '🎉',
-    created_at: '',
-  },
-  {
-    id: '2',
-    title: 'B.Tech Admission (AI Specialization)',
-    description: 'Secured admission to B.Tech CSE with AI specialization at Vedam School of Technology',
+    title: 'B.Tech Admission — AI Specialization',
+    description: 'Secured admission to B.Tech CSE (AI) at Vedam School of Technology, starting a focused journey into AI and software engineering.',
     date: '2025-07',
     category: 'academic',
     icon: '🎓',
     created_at: '',
   },
   {
-    id: '3',
-    title: 'Built First Full-Stack App',
-    description: 'Completed and deployed IdeaForge, a full-stack AI-powered application from scratch',
-    date: '2025-09',
+    id: '2',
+    title: 'Launched MOTIF — AI Startup Platform',
+    description: 'Built and launched MOTIF from scratch: a full-stack AI platform for startup idea validation, VC matching, and AI mentorship. Spring Boot backend + React frontend deployed on Vercel.',
+    date: '2026-04',
     category: 'project',
     icon: '🚀',
     created_at: '',
   },
   {
+    id: '3',
+    title: 'First GitHub Repository',
+    description: 'Created first public GitHub repository and started building in public, growing to 21 repositories across Python, TypeScript, JavaScript, CSS, and Java.',
+    date: '2023-02',
+    category: 'open-source',
+    icon: '🐙',
+    created_at: '',
+  },
+  {
     id: '4',
-    title: '100 LeetCode Problems',
-    description: 'Solved 100+ algorithmic problems on LeetCode, strengthening DSA fundamentals',
+    title: 'First Hackathon Participation',
+    description: 'Participated in first hackathon, collaborating under time pressure to build a working project and gaining real-world team experience.',
     date: '2025-11',
     category: 'competitive',
     icon: '⚡',
@@ -59,10 +59,10 @@ export default function AchievementsSection() {
   }, [])
 
   const stats = [
-    { label: 'Projects Built', value: '10+', icon: Zap, color: '#fbbf24' },
-    { label: 'Achievements', value: `${achievements.length}+`, icon: Trophy, color: '#fbbf24' },
-    { label: 'Contributions', value: '200+', icon: Star, color: '#34d399' },
-    { label: 'Problems Solved', value: '100+', icon: Medal, color: '#60a5fa' },
+    { label: 'GitHub Repos', value: '21', icon: Zap, color: '#fbbf24' },
+    { label: 'Projects Built', value: '15+', icon: Trophy, color: '#fbbf24' },
+    { label: 'Languages Used', value: '7+', icon: Star, color: '#34d399' },
+    { label: 'Years Coding', value: '3+', icon: Medal, color: '#60a5fa' },
   ]
 
   return (

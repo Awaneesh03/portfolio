@@ -240,34 +240,33 @@ export default function GalleryPanel() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="text-xs text-gray-400 block mb-1.5">Title *</label>
-              <input
-                value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-500/50"
-                placeholder="Photo title"
-              />
-            </div>
-            <div>
-              <label className="text-xs text-gray-400 block mb-1.5">Category</label>
-              <input
-                value={form.category}
-                onChange={(e) => setForm({ ...form, category: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-500/50"
-                placeholder="events, work, campus..."
-              />
-            </div>
+          <div>
+            <label className="text-xs text-gray-400 block mb-1.5">Title *</label>
+            <input
+              value={form.title}
+              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-500/50"
+              placeholder="e.g. Mumbai Tech Meetup 2024"
+            />
           </div>
 
           <div>
-            <label className="text-xs text-gray-400 block mb-1.5">Caption</label>
+            <label className="text-xs text-gray-400 block mb-1.5">Caption / Location</label>
             <input
               value={form.caption}
               onChange={(e) => setForm({ ...form, caption: e.target.value })}
               className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-500/50"
-              placeholder="Short caption..."
+              placeholder="e.g. Presenting at HackNITR, Bhubaneswar — March 2024"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs text-gray-400 block mb-1.5">Album / Tag</label>
+            <input
+              value={form.category}
+              onChange={(e) => setForm({ ...form, category: e.target.value })}
+              className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-500/50"
+              placeholder="e.g. hackathons, campus, events, travel"
             />
           </div>
 
@@ -284,12 +283,12 @@ export default function GalleryPanel() {
       <Modal open={bulkModal} onClose={() => setBulkModal(false)} title="Upload Multiple Photos" size="lg">
         <div className="space-y-5">
           <div>
-            <label className="text-xs text-gray-400 block mb-1.5">Category for all photos</label>
+            <label className="text-xs text-gray-400 block mb-1.5">Album / Tag for all photos</label>
             <input
               value={bulkCategory}
               onChange={(e) => setBulkCategory(e.target.value)}
               className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-amber-500/50"
-              placeholder="events, work, campus, mumbai-trip..."
+              placeholder="e.g. mumbai-trip, hackathons, campus-life"
             />
           </div>
 

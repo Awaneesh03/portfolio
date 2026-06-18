@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { GithubIcon, LinkedinIcon } from '@/components/ui/BrandIcons'
 import { PERSONAL_INFO } from '@/data'
 import { useEffect, useState } from 'react'
+import { useAvailability } from '@/hooks/useAvailability'
 
 const ROLES = [
   'Full Stack Developer',
@@ -39,6 +40,7 @@ function useTypewriter(texts: string[], speed = 75, pause = 1800) {
 
 export default function Hero() {
   const role = useTypewriter(ROLES)
+  const availability = useAvailability()
 
   const socials = [
     { icon: GithubIcon, href: PERSONAL_INFO.github, label: 'GitHub' },
@@ -72,13 +74,23 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass border border-amber-500/25 text-amber-300/80 text-sm font-medium mb-8 tracking-wide"
+          className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass text-sm font-medium mb-8 tracking-wide transition-colors ${
+            availability.available
+              ? 'border border-amber-500/25 text-amber-300/80'
+              : 'border border-white/10 text-gray-500'
+          }`}
         >
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
+            {availability.available && (
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+            )}
+            <span
+              className={`relative inline-flex rounded-full h-2 w-2 ${
+                availability.available ? 'bg-green-400' : 'bg-gray-600'
+              }`}
+            />
           </span>
-          Open to work
+          {availability.label}
         </motion.div>
 
         <motion.h1

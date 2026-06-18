@@ -16,6 +16,7 @@ interface GithubRepo {
   language: string | null
   topics: string[]
   updated_at: string
+  fork: boolean
 }
 
 interface GithubUser {
@@ -42,15 +43,18 @@ export default function OpenSourceSection() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const username = 'awaneeshgupta'
+    const username = 'Awaneesh03'
 
     Promise.all([
       fetch(`https://api.github.com/users/${username}`).then((r) => r.json()),
-      fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6&type=public`).then((r) => r.json()),
+      fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=50`).then((r) => r.json()),
     ])
       .then(([userData, repoData]) => {
         if (!userData.message) setUser(userData)
-        if (Array.isArray(repoData)) setRepos(repoData)
+        if (Array.isArray(repoData)) {
+          const ownRepos = (repoData as GithubRepo[]).filter((r) => !r.fork).slice(0, 6)
+          setRepos(ownRepos)
+        }
       })
       .catch(() => {})
       .finally(() => setLoading(false))
@@ -86,7 +90,7 @@ export default function OpenSourceSection() {
             <GithubIcon size={24} className="text-white" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-white font-semibold">github.com/awaneeshgupta</p>
+            <p className="text-white font-semibold">github.com/Awaneesh03</p>
             <p className="text-gray-500 text-sm">View full profile and contribution history</p>
           </div>
           <ExternalLink size={16} className="text-gray-500 group-hover:text-amber-400 transition-colors flex-shrink-0" />
