@@ -2,9 +2,9 @@ import { motion } from 'framer-motion'
 import { Mail, ArrowDown, Download } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { GithubIcon, LinkedinIcon } from '@/components/ui/BrandIcons'
-import { PERSONAL_INFO } from '@/data'
 import { useEffect, useState } from 'react'
 import { useAvailability } from '@/hooks/useAvailability'
+import { useProfile } from '@/hooks/useProfile'
 
 const ROLES = [
   'Full Stack Developer',
@@ -41,11 +41,12 @@ function useTypewriter(texts: string[], speed = 75, pause = 1800) {
 export default function Hero() {
   const role = useTypewriter(ROLES)
   const availability = useAvailability()
+  const profile = useProfile()
 
   const socials = [
-    { icon: GithubIcon, href: PERSONAL_INFO.github, label: 'GitHub' },
-    { icon: LinkedinIcon, href: PERSONAL_INFO.linkedin, label: 'LinkedIn' },
-    { icon: Mail, href: `mailto:${PERSONAL_INFO.email}`, label: 'Email' },
+    { icon: GithubIcon, href: profile.github, label: 'GitHub' },
+    { icon: LinkedinIcon, href: profile.linkedin, label: 'LinkedIn' },
+    { icon: Mail, href: `mailto:${profile.email}`, label: 'Email' },
   ]
 
   return (
