@@ -168,11 +168,11 @@ export default function GalleryPanel() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map((img) => (
             <div key={img.id} className="glass rounded-xl overflow-hidden group">
-              <div className="h-40 relative overflow-hidden">
+              <div className="relative overflow-hidden bg-black/30 flex items-center justify-center min-h-40">
                 {img.image_url ? (
-                  <img src={img.image_url} alt={img.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src={img.image_url} alt={img.title} className="w-full object-contain max-h-72" />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-amber-900/20 to-blue-900/20 flex items-center justify-center">
+                  <div className="w-full h-40 bg-gradient-to-br from-amber-900/20 to-blue-900/20 flex items-center justify-center">
                     <Image size={32} className="text-amber-500/40" />
                   </div>
                 )}

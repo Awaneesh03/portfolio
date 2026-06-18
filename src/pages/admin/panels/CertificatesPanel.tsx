@@ -30,7 +30,7 @@ export default function CertificatesPanel() {
     const file = files[0]
     if (!file) return
     setUploading(true)
-    const path = `${Date.now()}_${file.name}`
+    const path = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
     const { error } = await supabase.storage.from(STORAGE_BUCKETS.certificates).upload(path, file)
     if (error) { toast.error(error.message); setUploading(false); return }
     const { data } = supabase.storage.from(STORAGE_BUCKETS.certificates).getPublicUrl(path)
