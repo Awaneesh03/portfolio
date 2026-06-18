@@ -19,6 +19,7 @@ create table if not exists projects (
   live_url text,
   image_url text,
   featured boolean default false,
+  slug text,
   order_index integer default 0,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
@@ -116,6 +117,19 @@ create table if not exists open_source_contributions (
 );
 
 -- ============================================================
+-- SITE SETTINGS (availability badge, etc.)
+-- ============================================================
+create table if not exists site_settings (
+  key text primary key,
+  value jsonb not null,
+  updated_at timestamptz default now()
+);
+
+insert into site_settings (key, value)
+values ('availability', '{"available": true, "label": "Open to internships"}')
+on conflict (key) do nothing;
+
+-- ============================================================
 -- ROW LEVEL SECURITY
 -- ============================================================
 
@@ -128,6 +142,7 @@ alter table achievements enable row level security;
 alter table resumes enable row level security;
 alter table contact_messages enable row level security;
 alter table open_source_contributions enable row level security;
+alter table site_settings enable row level security;
 
 -- Public READ policies (anyone can read portfolio data)
 create policy "public read projects" on projects for select using (true);
@@ -137,6 +152,7 @@ create policy "public read skills" on skills for select using (true);
 create policy "public read achievements" on achievements for select using (true);
 create policy "public read resumes" on resumes for select using (true);
 create policy "public read oss" on open_source_contributions for select using (true);
+create policy "public read settings" on site_settings for select using (true);
 
 -- Public INSERT for contact (anyone can send a message)
 create policy "public insert contact" on contact_messages for insert with check (true);
@@ -172,6 +188,10 @@ create policy "admin write contact" on contact_messages for all
   with check (auth.jwt() ->> 'email' = 'kg3327949@gmail.com');
 
 create policy "admin write oss" on open_source_contributions for all
+  using (auth.jwt() ->> 'email' = 'kg3327949@gmail.com')
+  with check (auth.jwt() ->> 'email' = 'kg3327949@gmail.com');
+
+create policy "admin write settings" on site_settings for all
   using (auth.jwt() ->> 'email' = 'kg3327949@gmail.com')
   with check (auth.jwt() ->> 'email' = 'kg3327949@gmail.com');
 
