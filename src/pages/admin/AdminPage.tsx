@@ -3,6 +3,7 @@ import AdminLogin from './AdminLogin'
 import AdminDashboard from './AdminDashboard'
 import AccessDenied from './AccessDenied'
 import { PageLoader } from '@/components/ui/LoadingSpinner'
+import ErrorBoundary from '@/components/ui/ErrorBoundary'
 
 export default function AdminPage() {
   const { user, loading, isAllowed } = useAuth()
@@ -10,5 +11,9 @@ export default function AdminPage() {
   if (loading) return <PageLoader />
   if (!user) return <AdminLogin />
   if (!isAllowed) return <AccessDenied />
-  return <AdminDashboard />
+  return (
+    <ErrorBoundary>
+      <AdminDashboard />
+    </ErrorBoundary>
+  )
 }

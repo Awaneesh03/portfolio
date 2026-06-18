@@ -128,7 +128,7 @@ export const FALLBACK_PROJECTS: Project[] = [
     long_description: 'MOTIF is a full-stack AI startup platform I built as a solo founder. The backend (Spring Boot + Java) handles idea ingestion, runs GPT-powered analysis pipelines (IdeaAnalyzerService, CaseEvaluatorService, IdeaGeneratorService), maintains a VC profile database, and serves a JWT-secured REST API. The frontend (React + TypeScript) provides an interface for submitting ideas, reviewing AI-generated analysis, chatting with the AI mentor, and tracking VC applications. It was my first time building a production-grade full-stack system from scratch — every part from auth to deployment was designed and implemented by me.',
     tech_stack: ['Spring Boot', 'Java', 'OpenAI API', 'TypeScript', 'React', 'PostgreSQL', 'JWT', 'WebSearch API'],
     github_url: 'https://github.com/Awaneesh03/motif-website',
-    live_url: 'https://Motif-website.vercel.app',
+    live_url: 'https://motif-website-master.vercel.app/',
     image_url: '/projects/motif.svg',
     featured: true,
     order_index: 1,
