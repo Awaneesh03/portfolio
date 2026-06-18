@@ -11,7 +11,7 @@ export default function ContactSection() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     try {
@@ -62,18 +62,18 @@ export default function ContactSection() {
 
             <div className="space-y-3">
               {contactInfo.map(({ icon: Icon, label, value, href }) => (
-                <div key={label} className="glass rounded-xl p-4 flex items-center gap-4">
-                  <div className="w-9 h-9 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                    <Icon size={16} className="text-amber-400" />
+                <div key={label} className="glass rounded-xl p-4 flex items-center gap-4 border border-white/5">
+                  <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">
+                    <Icon size={16} className="text-gray-400" />
                   </div>
                   <div>
-                    <p className="text-gray-500 text-xs">{label}</p>
+                    <p className="text-gray-600 text-xs">{label}</p>
                     {href ? (
-                      <a href={href} target="_blank" rel="noopener noreferrer" className="text-white text-sm hover:text-amber-400 transition-colors">
+                      <a href={href} target="_blank" rel="noopener noreferrer" className="text-gray-300 text-sm hover:text-white transition-colors">
                         {value}
                       </a>
                     ) : (
-                      <p className="text-white text-sm">{value}</p>
+                      <p className="text-gray-300 text-sm">{value}</p>
                     )}
                   </div>
                 </div>
@@ -140,7 +140,7 @@ export default function ContactSection() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 py-3 bg-amber-500 hover:bg-amber-500 text-white font-semibold rounded-xl transition-all hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed glow-sm"
+                className="w-full flex items-center justify-center gap-2 py-3 bg-amber-500 hover:bg-amber-400 text-black font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

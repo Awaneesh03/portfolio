@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import SectionHeader from '@/components/ui/SectionHeader'
 import { STATIC_SKILLS, SKILL_CATEGORY_LABELS, SKILL_CATEGORY_COLORS } from '@/data'
 import { supabase } from '@/lib/supabase'
 import type { Skill, SkillCategory } from '@/types'
@@ -21,15 +20,22 @@ export default function SkillsSection() {
   }, {} as Record<SkillCategory, Skill[]>)
 
   return (
-    <section id="skills" className="py-24 px-4">
-      <div className="max-w-6xl mx-auto">
-        <SectionHeader
-          tag="Skills"
-          title="Tech Stack"
-          subtitle="Technologies I work with and am currently exploring"
-        />
+    <section id="skills" className="py-24 px-4 sm:px-8">
+      <div className="max-w-5xl mx-auto">
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Section label — left-aligned, no amber pill */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-14"
+        >
+          <p className="text-xs font-mono uppercase tracking-widest text-gray-600 mb-3">Tech Stack</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">What I work with</h2>
+        </motion.div>
+
+        <div className="space-y-10">
           {categories.map((category, catIdx) => {
             const catSkills = grouped[category]
             if (!catSkills?.length) return null
@@ -38,38 +44,36 @@ export default function SkillsSection() {
             return (
               <motion.div
                 key={category}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: catIdx * 0.08 }}
-                className="glass rounded-2xl p-6 hover:border-amber-500/20 transition-all"
+                transition={{ duration: 0.5, delay: catIdx * 0.06 }}
               >
-                <div className="flex items-center gap-3 mb-5">
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{ background: color, boxShadow: `0 0 8px ${color}` }}
-                  />
-                  <h3 className="font-semibold text-white">{SKILL_CATEGORY_LABELS[category]}</h3>
+                {/* Category label + line */}
+                <div className="flex items-center gap-4 mb-4">
+                  <span
+                    className="text-xs font-mono uppercase tracking-widest flex-shrink-0"
+                    style={{ color }}
+                  >
+                    {SKILL_CATEGORY_LABELS[category]}
+                  </span>
+                  <div className="h-px flex-1 bg-white/5" />
                 </div>
 
-                <div className="space-y-3">
+                {/* Skill chips — no progress bars, no percentages */}
+                <div className="flex flex-wrap gap-2">
                   {catSkills.map((skill, i) => (
-                    <div key={skill.id}>
-                      <div className="flex justify-between items-center mb-1.5">
-                        <span className="text-gray-300 text-sm font-medium">{skill.name}</span>
-                        <span className="text-xs" style={{ color }}>{skill.proficiency}%</span>
-                      </div>
-                      <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.proficiency}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.8, delay: catIdx * 0.08 + i * 0.05 }}
-                          className="h-full rounded-full"
-                          style={{ background: `linear-gradient(90deg, ${color}80, ${color})` }}
-                        />
-                      </div>
-                    </div>
+                    <motion.span
+                      key={skill.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.3, delay: catIdx * 0.04 + i * 0.03 }}
+                      className="px-3 py-1.5 rounded-lg text-sm text-gray-300 border border-white/8 hover:border-white/20 hover:text-white transition-all cursor-default"
+                      style={{ background: 'rgba(255,255,255,0.03)' }}
+                    >
+                      {skill.name}
+                    </motion.span>
                   ))}
                 </div>
               </motion.div>

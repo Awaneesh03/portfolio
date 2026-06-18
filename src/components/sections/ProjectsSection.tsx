@@ -27,8 +27,8 @@ function ProjectCard({ project, index, featured }: ProjectCardProps) {
       whileHover={{ y: -5 }}
       className={`glass rounded-2xl overflow-hidden group transition-all duration-300 h-full flex flex-col ${
         featured
-          ? 'hover:border-amber-500/40 border-amber-500/20'
-          : 'hover:border-amber-500/25'
+          ? 'hover:border-white/15 border-white/8'
+          : 'hover:border-white/12'
       }`}
     >
       {featured ? (
@@ -57,7 +57,7 @@ function ProjectCard({ project, index, featured }: ProjectCardProps) {
 
           <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between min-w-0">
             <div>
-              <h3 className="font-black text-white text-xl sm:text-2xl tracking-tight mb-2 group-hover:text-amber-300 transition-colors">
+              <h3 className="font-black text-white text-xl sm:text-2xl tracking-tight mb-2 group-hover:text-white/90 transition-colors">
                 {project.title}
               </h3>
               <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-4">
@@ -121,7 +121,7 @@ function ProjectCard({ project, index, featured }: ProjectCardProps) {
             <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-card)] via-transparent to-transparent" />
           </div>
           <div className="p-5 flex flex-col flex-1">
-            <h3 className="font-bold text-white text-lg mb-2 group-hover:text-amber-300 transition-colors">
+            <h3 className="font-bold text-white text-lg mb-2 group-hover:text-white/90 transition-colors">
               {project.title}
             </h3>
             <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3 flex-1">

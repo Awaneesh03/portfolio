@@ -29,15 +29,15 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="w-9 h-9 rounded-lg glass flex items-center justify-center text-gray-400 hover:text-amber-400 hover:border-amber-500/50 transition-all hover:scale-110"
+                className="w-9 h-9 rounded-lg glass flex items-center justify-center text-gray-500 hover:text-white transition-colors"
               >
                 <Icon size={16} />
               </a>
             ))}
           </div>
 
-          <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} Awaneesh Gupta. Built with ❤️
+          <p className="text-gray-600 text-sm font-mono">
+            © {new Date().getFullYear()} Awaneesh Gupta
           </p>
         </div>
       </div>

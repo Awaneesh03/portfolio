@@ -41,10 +41,10 @@ export default function AboutSection() {
 
             <div className="flex flex-wrap gap-3 pt-2">
               {stats.map(({ label, value, icon: Icon }) => (
-                <div key={label} className="flex items-center gap-2 px-3 py-2 rounded-lg glass border border-white/10 text-sm">
-                  <Icon size={14} className="text-amber-400" />
-                  <span className="text-gray-400">{label}:</span>
-                  <span className="text-white font-medium">{value}</span>
+                <div key={label} className="flex items-center gap-2 px-3 py-2 rounded-lg glass border border-white/8 text-sm">
+                  <Icon size={14} className="text-gray-500" />
+                  <span className="text-gray-500">{label}:</span>
+                  <span className="text-gray-300 font-medium">{value}</span>
                 </div>
               ))}
             </div>
@@ -52,31 +52,31 @@ export default function AboutSection() {
 
           {/* Cards */}
           <div className="space-y-5">
-            <Card delay={0.1} className="border-amber-500/20">
+            <Card delay={0.1} className="border-white/8">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                  <GraduationCap size={20} className="text-amber-400" />
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
+                  <GraduationCap size={20} className="text-gray-400" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-white mb-1">Education</h3>
-                  <p className="text-amber-400 font-medium">{PERSONAL_INFO.education.institution}</p>
+                  <p className="text-white font-medium">{PERSONAL_INFO.education.institution}</p>
                   <p className="text-gray-400 text-sm">{PERSONAL_INFO.education.degree}</p>
                   <p className="text-gray-500 text-sm">{PERSONAL_INFO.education.duration}</p>
                 </div>
               </div>
             </Card>
 
-            <Card delay={0.2} className="border-blue-500/20">
+            <Card delay={0.2} className="border-white/8">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-blue-600/20 flex items-center justify-center flex-shrink-0">
-                  <Target size={20} className="text-blue-400" />
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
+                  <Target size={20} className="text-gray-400" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-white mb-3">Career Goals</h3>
                   <ul className="space-y-2">
                     {PERSONAL_INFO.goals.map((goal) => (
                       <li key={goal} className="flex items-start gap-2 text-gray-400 text-sm">
-                        <span className="text-blue-400 mt-1 flex-shrink-0">→</span>
+                        <span className="text-gray-600 mt-1 flex-shrink-0">→</span>
                         {goal}
                       </li>
                     ))}
@@ -85,10 +85,10 @@ export default function AboutSection() {
               </div>
             </Card>
 
-            <Card delay={0.3} className="border-emerald-500/20">
+            <Card delay={0.3} className="border-white/8">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-emerald-600/20 flex items-center justify-center flex-shrink-0">
-                  <Lightbulb size={20} className="text-emerald-400" />
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
+                  <Lightbulb size={20} className="text-gray-400" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-white mb-2">Learning Journey</h3>
