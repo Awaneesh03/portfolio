@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Plus, Pencil, Trash2 } from 'lucide-react'
+import { Plus, Pencil, Trash2, Database } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import type { Skill, SkillCategory } from '@/types'
 import { SKILL_CATEGORY_LABELS, SKILL_CATEGORY_COLORS, STATIC_SKILLS } from '@/data'
@@ -10,17 +10,19 @@ import toast from 'react-hot-toast'
 const EMPTY: Omit<Skill, 'id'> = { name: '', category: 'language', proficiency: 70, order_index: 0 }
 
 export default function SkillsPanel() {
-  const [skills, setSkills] = useState<Skill[]>(STATIC_SKILLS)
+  const [skills, setSkills] = useState<Skill[]>([])
   const [loading, setLoading] = useState(true)
   const [modal, setModal] = useState(false)
   const [editing, setEditing] = useState<Skill | null>(null)
   const [form, setForm] = useState(EMPTY)
   const [saving, setSaving] = useState(false)
+  const [seeding, setSeeding] = useState(false)
   const [activeTab, setActiveTab] = useState<SkillCategory>('language')
 
   const load = async () => {
     const { data } = await supabase.from('skills').select('*').order('category').order('order_index')
-    if (data && data.length > 0) setSkills(data)
+    // Always update from DB — never fall back to STATIC_SKILLS here so deletes actually stick
+    setSkills(data ?? [])
     setLoading(false)
   }
 
@@ -57,9 +59,31 @@ export default function SkillsPanel() {
 
   const remove = async (id: string) => {
     if (!confirm('Delete this skill?')) return
-    await supabase.from('skills').delete().eq('id', id)
-    toast.success('Deleted')
-    load()
+    // Optimistic: remove from UI immediately so user sees it gone right away
+    setSkills((prev) => prev.filter((s) => s.id !== id))
+    const { error } = await supabase.from('skills').delete().eq('id', id)
+    if (error) {
+      toast.error(error.message)
+      load() // revert to real DB state on failure
+    } else {
+      toast.success('Deleted')
+    }
+  }
+
+  const seedDefaults = async () => {
+    if (!confirm(`This will insert all ${STATIC_SKILLS.length} default skills into the database. Continue?`)) return
+    setSeeding(true)
+    try {
+      const rows = STATIC_SKILLS.map(({ id: _id, ...rest }) => rest)
+      const { error } = await supabase.from('skills').insert(rows)
+      if (error) throw error
+      toast.success(`${STATIC_SKILLS.length} skills seeded!`)
+      load()
+    } catch (e: unknown) {
+      toast.error((e as Error).message)
+    } finally {
+      setSeeding(false)
+    }
   }
 
   const categories = Object.keys(SKILL_CATEGORY_LABELS) as SkillCategory[]
@@ -67,9 +91,16 @@ export default function SkillsPanel() {
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center justify-between">
-        <p className="text-gray-400 text-sm">{skills.length} skills</p>
-        <Button icon={<Plus size={14} />} onClick={openNew} size="sm">Add Skill</Button>
+      <div className="flex flex-wrap items-center gap-3 justify-between">
+        <p className="text-gray-400 text-sm">{skills.length} skills in database</p>
+        <div className="flex items-center gap-2">
+          {skills.length === 0 && !loading && (
+            <Button variant="ghost" size="sm" icon={<Database size={14} />} onClick={seedDefaults} loading={seeding}>
+              Seed {STATIC_SKILLS.length} defaults
+            </Button>
+          )}
+          <Button icon={<Plus size={14} />} onClick={openNew} size="sm">Add Skill</Button>
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2">
@@ -118,7 +149,18 @@ export default function SkillsPanel() {
               </div>
             </div>
           ))}
-          {!filtered.length && <div className="glass rounded-xl p-8 text-center text-gray-500 text-sm">No {SKILL_CATEGORY_LABELS[activeTab]} skills yet.</div>}
+          {!filtered.length && !skills.length && (
+            <div className="glass rounded-xl p-8 text-center text-gray-500 text-sm">
+              No skills in database yet.
+              <br />
+              <span className="text-gray-600 text-xs">Use "Seed defaults" above to import all {STATIC_SKILLS.length} skills at once.</span>
+            </div>
+          )}
+          {!filtered.length && skills.length > 0 && (
+            <div className="glass rounded-xl p-8 text-center text-gray-500 text-sm">
+              No {SKILL_CATEGORY_LABELS[activeTab]} skills yet.
+            </div>
+          )}
         </div>
       )}
 

@@ -55,9 +55,9 @@ export default function AchievementsPanel() {
 
   const remove = async (id: string) => {
     if (!confirm('Delete this achievement?')) return
-    await supabase.from('achievements').delete().eq('id', id)
-    toast.success('Deleted')
-    load()
+    setItems((prev) => prev.filter((a) => a.id !== id))
+    const { error } = await supabase.from('achievements').delete().eq('id', id)
+    if (error) { toast.error(error.message); load() } else { toast.success('Deleted') }
   }
 
   return (

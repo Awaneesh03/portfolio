@@ -72,9 +72,9 @@ export default function CertificatesPanel() {
 
   const remove = async (id: string) => {
     if (!confirm('Delete this certificate?')) return
-    await supabase.from('certificates').delete().eq('id', id)
-    toast.success('Deleted')
-    load()
+    setItems((prev) => prev.filter((c) => c.id !== id))
+    const { error } = await supabase.from('certificates').delete().eq('id', id)
+    if (error) { toast.error(error.message); load() } else { toast.success('Deleted') }
   }
 
   return (

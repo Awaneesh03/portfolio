@@ -136,16 +136,13 @@ export default function GalleryPanel() {
 
   const remove = async (img: GalleryImage) => {
     if (!confirm('Delete this photo?')) return
-    // Remove from storage if URL is from Supabase storage
+    setItems((prev) => prev.filter((i) => i.id !== img.id))
     if (img.image_url.includes('supabase')) {
       const pathMatch = img.image_url.match(/gallery\/(.+)$/)
-      if (pathMatch) {
-        await supabase.storage.from(STORAGE_BUCKETS.gallery).remove([pathMatch[1]])
-      }
+      if (pathMatch) await supabase.storage.from(STORAGE_BUCKETS.gallery).remove([pathMatch[1]])
     }
-    await supabase.from('gallery_images').delete().eq('id', img.id)
-    toast.success('Deleted')
-    load()
+    const { error } = await supabase.from('gallery_images').delete().eq('id', img.id)
+    if (error) { toast.error(error.message); load() } else { toast.success('Deleted') }
   }
 
   return (

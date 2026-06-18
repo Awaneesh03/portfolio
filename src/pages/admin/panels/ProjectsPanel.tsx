@@ -83,9 +83,9 @@ export default function ProjectsPanel() {
 
   const remove = async (id: string) => {
     if (!confirm('Delete this project?')) return
-    await supabase.from('projects').delete().eq('id', id)
-    toast.success('Deleted')
-    load()
+    setProjects((prev) => prev.filter((p) => p.id !== id))
+    const { error } = await supabase.from('projects').delete().eq('id', id)
+    if (error) { toast.error(error.message); load() } else { toast.success('Deleted') }
   }
 
   const seedDefaults = async () => {
